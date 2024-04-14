@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  yew-client:
+    build: .
+    restart: always
+    environment:  # TODO Specify domain name for running in production.
+      VIRTUAL_HOST:     testing.mader.xyz, 127.0.0.1
+      LETSENCRYPT_HOST: testing.mader.xyz       
+      LETSENCRYPT_MAIL: vincent.mader@icloud.com
+    ports:        # TODO Specify port number.
+      - 8112:8080  
+    networks:
+      - reverse-proxy
+
+networks:
+  reverse-proxy:
+    external: true
+    name: proxy_mxyz_proxy_network 
+    # ^ This has to be the same name as specified in the `docker-compose.yml` file 
+    #   of your reverse-proxy server. Additionally, it has to be prefixed by the proxy 
+    #   directory name (see "docker network ls").
+    #
+    #   If you have not set up a reverse-proxy server yet, take a look at:
+    #   -> https://github.com/vincentmader/docker-reverse-proxy
