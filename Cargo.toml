@@ -5,6 +5,10 @@ edition = "2021"
 
 [dependencies]
 
+[dependencies.stylist]
+version = "0.13.0"
+features = ["yew", "yew_integration", "yew_use_style"]
+
 [dependencies.yew]
 version = "0.21"
 features = ["csr"]

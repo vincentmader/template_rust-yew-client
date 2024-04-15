@@ -1,3 +1,4 @@
+use stylist::css;
 use yew::prelude::*;
 
 #[function_component]
@@ -11,8 +12,16 @@ pub fn HomeScreen() -> Html {
         }
     };
 
+    let class = css!(
+        "
+            p {
+                color: green;
+            }
+        "
+    );
+
     html! {
-        <div>
+        <div {class}>
             <button {onclick}>{ "+1" }</button>
             <p>{ *counter }</p>
         </div>
