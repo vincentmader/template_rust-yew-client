@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies.yew]
 version = "0.21"
 features = ["csr"]
+
+[dependencies.yew-router]
+version = "0.18.0"

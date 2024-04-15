@@ -1,20 +1,14 @@
 use yew::prelude::*;
+use yew_client::services::routing::{switch, Route};
+use yew_router::prelude::*;
 
 #[function_component]
 fn App() -> Html {
-    let counter = use_state(|| 0);
-    let onclick = {
-        let counter = counter.clone();
-        move |_| {
-            let value = *counter + 1;
-            counter.set(value);
-        }
-    };
-
     html! {
         <div>
-            <button {onclick}>{ "+1" }</button>
-            <p>{ *counter }</p>
+            <BrowserRouter>
+                <Switch<Route> render={switch} />
+            </BrowserRouter>
         </div>
     }
 }
