@@ -1,5 +1,6 @@
 use crate::screens::{
-    home::HomeScreen, imprint::ImprintScreen, page_not_found::PageNotFoundScreen,
+    home::HomeScreen, imprint::ImprintScreen, login::LoginScreen,
+    page_not_found::PageNotFoundScreen,
 };
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -10,6 +11,8 @@ pub enum Route {
     Home,
     #[at("/imprint")]
     Imprint,
+    #[at("/login")]
+    Login,
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -19,6 +22,7 @@ pub fn switch(routes: Route) -> Html {
     let screen = match routes {
         Route::Home => html! { <HomeScreen /> },
         Route::Imprint => html! { <ImprintScreen /> },
+        Route::Login => html! { <LoginScreen /> },
         Route::NotFound => html! { <PageNotFoundScreen /> },
     };
 
