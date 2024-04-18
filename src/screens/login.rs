@@ -1,4 +1,7 @@
-use crate::services::dom::{self, text_field_is_empty};
+use crate::services::{
+    dom::{self, text_field_is_empty},
+    hashing::generate_hashed_password,
+};
 use rs_web_api_models::api_message::{
     ApiError, ApiMessage, LoginError, PasswordResetError, RegistrationError,
 };
@@ -126,7 +129,6 @@ pub fn LoginScreen() -> Html {
 
                     let user_info = dom::read_value_from_text_field(&document, "user_info");
                     let pass_word = dom::read_value_from_text_field(&document, "pass_word");
-                    let pass_hash = pass_word; // TODO Apply hashing to password.
 
                     clear_info_text(&document);
                     let is_valid = assure_validity_of_fields(DisplayMode::Login, &document);
@@ -135,6 +137,8 @@ pub fn LoginScreen() -> Html {
                         wasm_bindgen_futures::spawn_local(async move {
                             let client = reqwest::Client::new();
                             let url = format!("{}/login", BACKEND_URL);
+
+                            let pass_hash = generate_hashed_password(&pass_word);
                             let body = HashMap::from([
                                 ("user_info", &user_info),
                                 ("pass_hash", &pass_hash), //
@@ -220,10 +224,13 @@ pub fn LoginScreen() -> Html {
                         wasm_bindgen_futures::spawn_local(async move {
                             let client = reqwest::Client::new();
                             let url = format!("{}/register", BACKEND_URL);
+
+                            let pass_hash = generate_hashed_password(&pass_word);
+                            println!("{}", pass_hash);
                             let body = HashMap::from([
                                 ("user_name", &user_name),
                                 ("mail_addr", &mail_addr),
-                                ("pass_hash", &pass_word),
+                                ("pass_hash", &pass_hash),
                             ]);
                             let result = client.post(url).json(&body).send().await.unwrap();
 
